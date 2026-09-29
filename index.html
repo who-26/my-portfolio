@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>한지후 — Portfolio</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
+<style>
+/* 스타일 C(벤토 카드 그리드) 구조 + 스타일 D(다크 · 골드 단일 포인트) 색상 */
+:root{
+  --bg:#0b0b0d; --bg2:#1c1b1f; --card:#151417; --line:#333237;
+  --ink:#f2f1ee; --ink-soft:#96949a;
+  --gold:#c9a25c; --gold-soft:rgba(201,162,92,.12);
+  --content: 1360px; --gut:20px;
+  --sp1:5px; --sp2:10px; --sp3:20px; --sp4:30px; --sp5:40px; --sp6:60px; --sp7:80px; --sp8:100px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Pretendard',-apple-system,'Malgun Gothic',sans-serif;color:var(--ink);background:var(--bg);line-height:1.6;-webkit-font-smoothing:antialiased;word-break:keep-all;overflow-wrap:break-word}
+img{max-width:100%;display:block}
+a{color:inherit;text-decoration:none}
+.shell{max-width:var(--content);margin:0 auto;padding:0 5%}
+
+.pill{display:inline-block;font-size:11.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;background:var(--gold-soft);color:var(--gold);padding:8px 18px;border-radius:999px;margin-bottom:var(--sp3)}
+.card{background:var(--card);border:1px solid var(--line);border-radius:22px;box-shadow:0 2px 10px rgba(0,0,0,.35);padding:var(--sp5);transition:border-color .25s ease}
+.card:hover{border-color:#4a4850}
+
+.reveal{opacity:0;transform:translateY(18px);transition:opacity .55s ease,transform .55s ease}
+.reveal.in{opacity:1;transform:translateY(0)}
+
+.btn{display:inline-flex;align-items:center;gap:8px;font-size:14px;font-weight:700;padding:13px 24px;border-radius:999px;border:0;cursor:pointer;font-family:inherit}
+.btn-gold{background:var(--gold);color:#141210}
+.btn-ghost{border:1px solid var(--line);color:var(--ink);background:transparent}
+.btn-ghost:hover{border-color:var(--gold);color:var(--gold)}
+
+/* ---------- header ---------- */
+header.site{position:sticky;top:0;z-index:50;background:rgba(11,11,13,.88);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+header.site .shell{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;height:76px}
+.logo{font-size:17px;font-weight:800;letter-spacing:.02em}
+.logo b{color:var(--gold)}
+nav.main{display:flex;gap:var(--sp5)}
+nav.main a{font-size:13.5px;color:var(--ink-soft);font-weight:500}
+nav.main a:hover{color:var(--ink)}
+.cta-btn{display:inline-flex;align-items:center;gap:8px;background:var(--gold);color:#141210;font-size:13px;font-weight:800;padding:11px 20px;border-radius:999px;justify-self:end}
+
+/* ---------- bento ---------- */
+.bento{display:grid;grid-template-columns:repeat(12,1fr);gap:var(--gut)}
+.sec{padding:var(--sp7) 0}
+.sec-head{margin-bottom:var(--sp5)}
+.sec-head h2{font-size:clamp(24px,3vw,34px);font-weight:800;letter-spacing:-.01em}
+
+/* ---------- hero: 밤의 지구 사진 위에 텍스트를 얹은 큰 카드 ---------- */
+.hero{padding:var(--sp6) 0 var(--sp4)}
+.h-main{grid-column:1/-1;position:relative;overflow:hidden;padding:0;min-height:560px;display:flex;align-items:center}
+.h-main .h-bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 70%}
+.h-main::before{content:'';position:absolute;inset:0;background:linear-gradient(90deg,rgba(11,11,13,.92) 0%,rgba(11,11,13,.7) 38%,rgba(11,11,13,.1) 75%),linear-gradient(0deg,rgba(11,11,13,.6),transparent 40%)}
+.h-streak{position:absolute;top:8%;right:-4%;width:58%;opacity:.55;mix-blend-mode:screen;filter:blur(2px);transform:rotate(-8deg);pointer-events:none}
+.h-copy{position:relative;z-index:1;padding:var(--sp7) var(--sp6);max-width:680px}
+.h-copy h1{font-size:clamp(30px,4.2vw,52px);font-weight:800;letter-spacing:-.02em;line-height:1.3;margin-bottom:var(--sp4)}
+.h-copy h1 em{font-style:normal;color:var(--gold)}
+.h-copy p{font-size:15px;color:#c4c2c8;max-width:440px;margin-bottom:var(--sp5)}
+.h-copy .cta-row{display:flex;gap:var(--sp2);flex-wrap:wrap}
+.h-copy .btn-ghost{background:rgba(11,11,13,.4);backdrop-filter:blur(6px)}
+.h-stat{grid-column:span 4;display:flex;align-items:baseline;gap:var(--sp3);padding:var(--sp4) var(--sp5)}
+.h-stat .n{font-size:34px;font-weight:800;color:var(--gold);line-height:1}
+.h-stat .t{font-size:13.5px;color:var(--ink-soft)}
+
+/* ---------- about ---------- */
+.b-about-copy{grid-column:1/-1;display:flex;gap:var(--sp5);position:relative;overflow:hidden;padding:var(--sp6) var(--sp5)}
+.b-about-copy .glow{position:absolute;right:-6%;bottom:-10%;width:52%;opacity:.35;mix-blend-mode:screen;filter:blur(3px);transform:rotate(12deg);pointer-events:none}
+.b-about-copy > *:not(.glow){position:relative}
+.side-labels{flex:0 0 20px;display:flex;flex-direction:column;gap:var(--sp4)}
+.side-labels span{writing-mode:vertical-rl;font-size:11px;font-weight:700;letter-spacing:.14em;color:var(--ink-soft);text-transform:uppercase}
+.side-labels span:first-child{color:var(--gold)}
+.about-main{flex:1;display:flex;flex-direction:column;justify-content:center}
+.about-main h3{font-size:clamp(22px,2.6vw,30px);font-weight:800;line-height:1.4;margin-bottom:var(--sp3)}
+.about-main p{font-size:14.5px;color:var(--ink-soft);margin-bottom:var(--sp4);max-width:560px}
+.about-main .btn{align-self:flex-start}
+
+.card h4{font-size:12px;font-weight:800;letter-spacing:.12em;color:var(--gold);text-transform:uppercase;margin-bottom:var(--sp4)}
+.b-info{grid-column:span 5}
+.b-career{grid-column:span 7}
+.info-item{display:flex;justify-content:space-between;gap:var(--sp3);padding:18px 0;border-bottom:1px solid var(--line)}
+.info-item:last-child{border-bottom:0}
+.info-item .lbl{font-size:13.5px;color:var(--ink-soft)}
+.info-item .val{font-size:15px;font-weight:700;text-align:right}
+
+.timeline{display:flex;gap:var(--sp5);padding-top:var(--sp2)}
+.tl-item{flex:1;min-width:0;position:relative;padding-top:26px}
+.tl-item::before{content:'';position:absolute;top:6px;left:0;width:10px;height:10px;border-radius:50%;background:var(--gold)}
+.tl-item::after{content:'';position:absolute;top:10px;left:18px;right:calc(-1 * var(--sp5) + 4px);height:1px;background:var(--line)}
+.tl-item:last-child::after{display:none}
+.tl-item .yr{font-size:12px;font-weight:700;color:var(--gold);display:block;margin-bottom:6px}
+.tl-item .org{display:block;font-size:15px;font-weight:800;margin-bottom:3px}
+.tl-item .role{display:block;font-size:12.5px;color:var(--ink-soft)}
+
+/* ---------- skill ---------- */
+.chip{grid-column:span 4;padding:var(--sp4)}
+.chip.wide{grid-column:span 8}
+.chip .num{font-size:12px;font-weight:700;color:var(--gold);margin-bottom:var(--sp3)}
+.chip .nm{font-size:17px;font-weight:800;margin-bottom:8px}
+.chip .dsc{font-size:13px;color:var(--ink-soft);line-height:1.6}
+
+/* ---------- project ---------- */
+.b-proj{grid-column:span 4;padding:0;overflow:hidden;display:flex;flex-direction:column}
+.b-proj .pimg{aspect-ratio:4/3;overflow:hidden;background:var(--bg2)}
+/* project-2·3 원본 이미지 모서리에 흰 라운드가 있어 살짝 확대해 잘라냄 */
+.b-proj .pimg img{width:100%;height:100%;object-fit:cover;transform:scale(1.08);filter:brightness(.85) saturate(.9);transition:transform .5s ease,filter .5s ease}
+.b-proj:hover .pimg img{transform:scale(1.13);filter:brightness(1) saturate(1)}
+.b-proj .pbody{padding:var(--sp4);display:flex;flex-direction:column;flex:1}
+.b-proj .pyear{font-size:11.5px;font-weight:700;color:var(--gold)}
+.b-proj h3{font-size:17px;font-weight:800;margin:6px 0 8px}
+.b-proj p{font-size:13px;color:var(--ink-soft);margin-bottom:var(--sp3)}
+.proj-tags{display:flex;justify-content:space-between;align-items:center;margin-top:auto;padding-top:var(--sp3);border-top:1px solid var(--line)}
+.tag-row{display:flex;gap:6px;flex-wrap:wrap}
+.tag-row span{font-size:10.5px;font-weight:700;background:var(--bg2);padding:5px 10px;border-radius:999px;color:var(--ink-soft)}
+.arrow-circ{width:34px;height:34px;border-radius:50%;border:1px solid var(--line);display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0;transition:all .25s ease}
+.b-proj:hover .arrow-circ{background:var(--gold);border-color:var(--gold);color:#141210}
+
+/* ---------- board ---------- */
+.b-board{grid-column:1/-1}
+.board-note{font-size:13.5px;color:var(--ink-soft);margin-bottom:var(--sp4);max-width:560px}
+.board-row{display:flex;align-items:center;gap:18px;padding:18px 0;border-bottom:1px solid var(--line);flex-wrap:wrap}
+.board-row:last-child{border-bottom:0}
+.board-row .bd{font-size:11px;font-weight:800;background:var(--gold-soft);color:var(--gold);padding:5px 12px;border-radius:999px;flex-shrink:0;white-space:nowrap}
+.board-row .bt{flex:1;min-width:120px;font-size:14.5px;font-weight:700}
+.board-row .bm{font-size:12.5px;color:var(--ink-soft)}
+
+/* ---------- contact ---------- */
+.b-contact{grid-column:1/-1}
+.b-contact .bento{align-items:center}
+.b-contact-copy{grid-column:span 5}
+.b-contact-copy h3{font-size:clamp(22px,2.6vw,28px);font-weight:800;line-height:1.4;margin-bottom:var(--sp3)}
+.b-contact-copy p{font-size:14.5px;color:var(--ink-soft)}
+.b-contact-form{grid-column:span 7}
+.field-row{display:grid;grid-template-columns:1fr 1fr;gap:var(--sp3)}
+.field{margin-bottom:var(--sp3)}
+.field label{display:block;font-size:12px;font-weight:700;margin-bottom:6px;color:var(--ink-soft)}
+.field input,.field textarea{width:100%;border:1px solid var(--line);border-radius:12px;padding:13px 14px;font-family:inherit;font-size:14px;background:var(--bg);color:var(--ink);resize:vertical}
+.field input:focus,.field textarea:focus{outline:none;border-color:var(--gold)}
+
+/* ---------- footer ---------- */
+footer.site{padding:var(--sp2) 0 var(--sp7)}
+footer.site .bar{display:flex;align-items:center;justify-content:space-between;gap:var(--sp3);padding:var(--sp4) var(--sp5)}
+.fbrand{font-size:14px;font-weight:800}
+.frole{font-size:12px;color:var(--ink-soft);margin-left:8px}
+.socials{display:flex;gap:var(--sp2)}
+.socials a{width:34px;height:34px;border-radius:50%;border:1px solid var(--line);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700}
+.socials a:hover{border-color:var(--gold);color:var(--gold)}
+
+/* ---------- responsive ---------- */
+@media(max-width:960px){
+  nav.main{display:none}
+  header.site .shell{grid-template-columns:1fr auto}
+  .b-info,.b-career,.b-proj,.b-contact-copy,.b-contact-form{grid-column:1/-1}
+  .h-main{min-height:480px;align-items:flex-end}
+  .h-main::before{background:linear-gradient(0deg,rgba(11,11,13,.95) 0%,rgba(11,11,13,.7) 50%,rgba(11,11,13,.2) 100%)}
+  .h-copy{padding:var(--sp5)}
+  .h-stat{grid-column:span 4;flex-direction:column;gap:6px;padding:var(--sp3)}
+  .chip,.chip.wide{grid-column:span 6}
+  .timeline{flex-direction:column;gap:var(--sp4)}
+  .tl-item::after{top:18px;left:4px;right:auto;width:1px;height:calc(100% + var(--sp4) - 16px)}
+}
+@media(max-width:600px){
+  :root{--gut:12px}
+  .card{padding:var(--sp4) var(--sp3)}
+  .h-copy{padding:var(--sp5) var(--sp3)}
+  .h-main{min-height:440px}
+  .b-about-copy{padding:var(--sp5) var(--sp3)}
+  .h-stat{grid-column:1/-1;flex-direction:row;align-items:baseline}
+  .chip,.chip.wide{grid-column:1/-1}
+  .b-about-copy{flex-direction:column;gap:var(--sp3)}
+  .side-labels{flex-direction:row;gap:var(--sp3)}
+  .side-labels span{writing-mode:horizontal-tb}
+  .field-row{grid-template-columns:1fr;gap:0}
+  .board-row{gap:10px}
+  .board-row .bm{width:100%}
+  .info-item{flex-direction:column;gap:4px}
+  .info-item .val{text-align:left}
+  footer.site .bar{flex-direction:column;align-items:flex-start;padding:var(--sp3)}
+}
+</style>
+</head>
+<body>
+
+<header class="site">
+  <div class="shell">
+    <a href="#" class="logo">한지후<b>.</b></a>
+    <nav class="main">
+      <a href="#about">소개</a>
+      <a href="#skill">스킬</a>
+      <a href="#project">포트폴리오</a>
+      <a href="#board">게시판</a>
+      <a href="#contact">문의</a>
+    </nav>
+    <a href="#contact" class="cta-btn">문의하기 →</a>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="shell bento">
+    <div class="card h-main reveal">
+      <img class="h-bg" src="img/profile.jpg" alt="">
+      <img class="h-streak" src="img/visual.jpg" alt="">
+      <div class="h-copy">
+        <span class="pill">Portfolio</span>
+        <h1>만든 것으로 증명하는<br><em>한지후</em>의 포트폴리오</h1>
+        <p>기획부터 배포까지 직접 구현한 프로젝트들을 모았습니다. 아래에서 작업물과 사용한 기술을 확인하실 수 있습니다.</p>
+        <div class="cta-row">
+          <a href="#project" class="btn btn-gold">포트폴리오 보기 →</a>
+          <a href="#about" class="btn btn-ghost">소개 더 보기</a>
+        </div>
+      </div>
+    </div>
+    <div class="card h-stat reveal"><span class="n">3</span><span class="t">완성한 프로젝트</span></div>
+    <div class="card h-stat reveal"><span class="n">6</span><span class="t">다룰 수 있는 기술</span></div>
+    <div class="card h-stat reveal"><span class="n">2026</span><span class="t">풀스택 과정 수강 중</span></div>
+  </div>
+</section>
+
+<section class="sec" id="about">
+  <div class="shell">
+    <div class="sec-head">
+      <span class="pill">About</span>
+      <h2>안녕하세요, 한지후입니다</h2>
+    </div>
+    <div class="bento" style="margin-bottom:var(--gut)">
+      <div class="card b-about-copy reveal">
+        <img class="glow" src="img/visual.jpg" alt="">
+        <div class="side-labels"><span>About</span><span>Info</span><span>Career</span></div>
+        <div class="about-main">
+          <h3>웹을 만들고 있는<br>한지후입니다.</h3>
+          <p>결과물만큼 그 과정에서 무엇을 고민했는지를 중요하게 생각합니다. 혼자 기획부터 배포까지 끝내본 프로젝트도, 여럿이 역할을 나눠 완성한 프로젝트도 있습니다.</p>
+          <a href="#skill" class="btn btn-gold">더 알아보기 →</a>
+        </div>
+      </div>
+    </div>
+    <div class="bento">
+      <div class="card b-info reveal">
+        <h4>Info</h4>
+        <div class="info-item"><span class="lbl">이름</span><span class="val">한지후</span></div>
+        <div class="info-item"><span class="lbl">과정</span><span class="val">바이브코딩 풀스택</span></div>
+        <div class="info-item"><span class="lbl">이메일</span><span class="val">hello@example.com</span></div>
+      </div>
+      <div class="card b-career reveal">
+        <h4>Career · 경력 · 학력</h4>
+        <div class="timeline">
+          <div class="tl-item"><span class="yr">2026 — 현재</span><span class="org">SBSART GANGNAM</span><span class="role">바이브코딩 풀스택 과정</span></div>
+          <div class="tl-item"><span class="yr">2025</span><span class="org">OO대학교</span><span class="role">시각디자인학과 졸업</span></div>
+          <div class="tl-item"><span class="yr">2025</span><span class="org">정보처리기능사</span><span class="role">자격 취득</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="skill">
+  <div class="shell">
+    <div class="sec-head">
+      <span class="pill">Skill</span>
+      <h2>다룰 수 있는 것들</h2>
+    </div>
+    <div class="bento">
+      <div class="card chip wide reveal"><div class="num">01</div><div class="nm">HTML / CSS</div><div class="dsc">화면의 레이아웃과 스타일을 만듭니다. 시맨틱 마크업과 그리드·플렉스 배치를 주로 씁니다.</div></div>
+      <div class="card chip reveal"><div class="num">02</div><div class="nm">JavaScript</div><div class="dsc">동작과 사용자 상호작용을 구현합니다.</div></div>
+      <div class="card chip reveal"><div class="num">03</div><div class="nm">Git · GitHub</div><div class="dsc">변경 이력을 관리하고 협업합니다.</div></div>
+      <div class="card chip reveal"><div class="num">04</div><div class="nm">Supabase</div><div class="dsc">데이터를 저장하고 불러옵니다.</div></div>
+      <div class="card chip reveal"><div class="num">05</div><div class="nm">Claude Code</div><div class="dsc">AI에게 구체적으로 요청하고 결과를 검증합니다.</div></div>
+      <div class="card chip wide reveal"><div class="num">06</div><div class="nm">반응형 레이아웃</div><div class="dsc">화면 크기에 맞게 배치를 조정합니다. 데스크톱·태블릿·모바일에서 모두 읽기 편한 화면을 목표로 합니다.</div></div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="project">
+  <div class="shell">
+    <div class="sec-head">
+      <span class="pill">Portfolio</span>
+      <h2>주요 프로젝트</h2>
+    </div>
+    <div class="bento">
+      <a class="card b-proj reveal" href="#">
+        <div class="pimg"><img src="img/project-1.jpg" alt="오늘의 할일 앱 대표 이미지"></div>
+        <div class="pbody">
+          <span class="pyear">2026</span>
+          <h3>오늘의 할일 앱</h3>
+          <p>Supabase로 데이터를 저장하는 개인 투두리스트</p>
+          <div class="proj-tags">
+            <div class="tag-row"><span>JavaScript</span><span>Supabase</span></div>
+            <div class="arrow-circ">→</div>
+          </div>
+        </div>
+      </a>
+      <a class="card b-proj reveal" href="#">
+        <div class="pimg"><img src="img/project-2.jpg" alt="팀 일정 공유 페이지 화면"></div>
+        <div class="pbody">
+          <span class="pyear">2026</span>
+          <h3>팀 일정 공유 페이지</h3>
+          <p>3인 팀 프로젝트, 역할을 나눠 화면별로 맡아 제작</p>
+          <div class="proj-tags">
+            <div class="tag-row"><span>HTML</span><span>GitHub</span></div>
+            <div class="arrow-circ">→</div>
+          </div>
+        </div>
+      </a>
+      <a class="card b-proj reveal" href="#">
+        <div class="pimg"><img src="img/project-3.jpg" alt="무드보드 갤러리 화면"></div>
+        <div class="pbody">
+          <span class="pyear">2025</span>
+          <h3>무드보드 갤러리</h3>
+          <p>좋아하는 이미지를 모아두는 개인 갤러리 페이지</p>
+          <div class="proj-tags">
+            <div class="tag-row"><span>HTML</span><span>CSS</span></div>
+            <div class="arrow-circ">→</div>
+          </div>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="board">
+  <div class="shell">
+    <div class="sec-head">
+      <span class="pill">Board</span>
+      <h2>게시판</h2>
+    </div>
+    <div class="bento">
+      <div class="card b-board reveal">
+        <p class="board-note">작업하면서 남긴 글들입니다. Supabase와 연결하면 실제로 글을 쓰고 불러오는 게시판으로 바뀝니다.</p>
+        <div class="board-row"><span class="bd">공지</span><span class="bt">포트폴리오 1차 완성 — 피드백 환영합니다</span><span class="bm">2026.09.24</span></div>
+        <div class="board-row"><span class="bd">업데이트</span><span class="bt">오늘의 할일 앱, Supabase 연동까지 완료</span><span class="bm">2026.09.18</span></div>
+        <div class="board-row"><span class="bd">회고</span><span class="bt">팀 프로젝트 회고 — 역할 분담에서 배운 것</span><span class="bm">2026.09.12</span></div>
+        <div class="board-row"><span class="bd">정리</span><span class="bt">git push 오류(rejected) 해결 방법 정리</span><span class="bm">2026.09.05</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="contact">
+  <div class="shell bento">
+    <div class="card b-contact reveal">
+      <div class="bento">
+        <div class="b-contact-copy">
+          <span class="pill">Contact</span>
+          <h3>함께 좋은<br>프로젝트를<br>만들어보세요.</h3>
+          <p>프로젝트 또는 협업 문의를 남겨주세요.<br>빠르게 답변드리겠습니다.</p>
+        </div>
+        <form class="b-contact-form" onsubmit="event.preventDefault();this.querySelector('button').textContent='전송되었습니다 ✓';this.reset();">
+          <div class="field-row">
+            <div class="field"><label for="f-name">이름</label><input id="f-name" type="text" placeholder="이름을 입력해주세요." required></div>
+            <div class="field"><label for="f-mail">이메일</label><input id="f-mail" type="email" placeholder="이메일을 입력해주세요." required></div>
+          </div>
+          <div class="field"><label for="f-msg">문의 내용</label><textarea id="f-msg" rows="5" placeholder="문의 내용을 입력해주세요." required></textarea></div>
+          <button type="submit" class="btn btn-gold">문의 보내기 →</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="site">
+  <div class="shell">
+    <div class="card bar">
+      <div style="display:flex;align-items:baseline">
+        <span class="fbrand">한지후</span><span class="frole">Web Portfolio © 2026</span>
+      </div>
+      <div class="socials">
+        <a href="https://github.com/" aria-label="GitHub">GH</a>
+        <a href="mailto:hello@example.com" aria-label="이메일">@</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+const els = document.querySelectorAll('.reveal');
+const io = new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+}, {threshold:0.12});
+els.forEach(el=>io.observe(el));
+</script>
+
+</body>
+</html>
