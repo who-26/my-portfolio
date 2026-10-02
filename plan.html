@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hoo Lab 기획서</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css">
+  <style>
+    :root {
+      --bg: #000000;
+      --text: #ffffff;
+      --muted: #a3a3a3;
+      --line: #262626;
+      --card: #0d0d0d;
+      --point: #439DC5;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Pretendard', sans-serif;
+      line-height: 1.7;
+      word-break: keep-all;
+    }
+    .wrap {
+      max-width: 880px;
+      margin: 0 auto;
+      padding: 72px 24px 96px;
+    }
+
+    /* 표지 */
+    header {
+      padding-bottom: 48px;
+      border-bottom: 1px solid var(--line);
+    }
+    .eyebrow {
+      color: var(--point);
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+    }
+    h1 {
+      margin: 8px 0 16px;
+      font-size: 48px;
+      font-weight: 800;
+      line-height: 1.2;
+      letter-spacing: -0.02em;
+    }
+    .summary {
+      margin: 0;
+      color: var(--muted);
+      font-size: 18px;
+    }
+
+    /* 섹션 */
+    section {
+      padding: 56px 0;
+      border-bottom: 1px solid var(--line);
+    }
+    section:last-of-type { border-bottom: none; }
+    h2 {
+      display: flex;
+      align-items: baseline;
+      gap: 12px;
+      margin: 0 0 24px;
+      font-size: 26px;
+      font-weight: 700;
+    }
+    h2 .num {
+      color: var(--point);
+      font-size: 16px;
+      font-weight: 600;
+    }
+    h3 {
+      margin: 0 0 6px;
+      font-size: 17px;
+      font-weight: 700;
+    }
+    p { margin: 0; }
+    .lead { font-size: 18px; }
+    .lead + .lead { margin-top: 12px; }
+
+    /* 2열 카드 */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+    }
+    .card {
+      padding: 24px;
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+    }
+    .card p { color: var(--muted); }
+
+    /* 정의 목록 (디자인 방향) */
+    .rows { margin: 0; }
+    .row {
+      display: grid;
+      grid-template-columns: 140px 1fr;
+      gap: 16px;
+      padding: 18px 0;
+      border-top: 1px solid var(--line);
+    }
+    .row:first-child { border-top: none; padding-top: 0; }
+    .row dt { color: var(--muted); font-weight: 600; }
+    .row dd { margin: 0; }
+    .logo {
+      font-size: 22px;
+      font-weight: 800;
+      letter-spacing: -0.01em;
+    }
+    .logo span { color: var(--point); }
+    .swatches { display: flex; flex-wrap: wrap; gap: 12px; }
+    .swatch { display: flex; align-items: center; gap: 10px; }
+    .chip {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      border: 1px solid #3a3a3a;
+    }
+    .swatch small { display: block; color: var(--muted); font-size: 13px; line-height: 1.3; }
+    .menu { display: flex; flex-wrap: wrap; gap: 8px; }
+    .menu span {
+      padding: 4px 14px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      font-size: 15px;
+    }
+    a { color: var(--point); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    /* 기능 표 */
+    .group-title {
+      margin: 32px 0 12px;
+      color: var(--point);
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+    }
+    .group-title:first-of-type { margin-top: 0; }
+    .list { margin: 0; padding: 0; list-style: none; }
+    .list li {
+      display: grid;
+      grid-template-columns: 160px 1fr;
+      gap: 16px;
+      padding: 14px 0;
+      border-top: 1px solid var(--line);
+    }
+    .list li:last-child { border-bottom: 1px solid var(--line); }
+    .list strong { font-weight: 700; }
+    .list span { color: var(--muted); }
+
+    /* 화면 목록 */
+    .screens { counter-reset: screen; }
+    .screens .card { position: relative; padding-top: 52px; }
+    .screens .card::before {
+      counter-increment: screen;
+      content: "SCREEN " counter(screen, decimal-leading-zero);
+      position: absolute;
+      top: 22px;
+      left: 24px;
+      color: var(--point);
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+    }
+
+    /* 목표 */
+    .goal {
+      padding: 32px;
+      border-left: 3px solid var(--point);
+      background: var(--card);
+      border-radius: 0 12px 12px 0;
+      font-size: 20px;
+      font-weight: 600;
+    }
+
+    @media (max-width: 640px) {
+      .wrap { padding: 48px 16px 64px; }
+      h1 { font-size: 36px; }
+      .grid { grid-template-columns: 1fr; }
+      .row, .list li { grid-template-columns: 1fr; gap: 4px; }
+      .goal { padding: 24px; font-size: 18px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+
+    <header>
+      <div class="eyebrow">PERSONAL WEBSITE PLAN</div>
+      <h1>Hoo Lab 기획서</h1>
+      <p class="summary">바이브 코딩으로 만든 웹 서비스와 그 제작 과정을 보여주는 개인 홈페이지</p>
+    </header>
+
+    <section>
+      <h2><span class="num">01</span>기획 배경</h2>
+      <p class="lead">웹서비스 기획·운영 PM으로서 아이디어를 직접 구현하는 역량을 갖추고, 그 역량을 보여주려고 합니다.</p>
+      <p class="lead">바이브 코딩을 활용해 다양한 웹 서비스를 제작하고, 결과물과 제작 과정의 포인트를 함께 보여줄 수 있는 개인 홈페이지를 만듭니다.</p>
+    </section>
+
+    <section>
+      <h2><span class="num">02</span>누가 보나요</h2>
+      <div class="grid">
+        <div class="card">
+          <h3>보는 사람</h3>
+          <p>내가 무엇을 할 수 있는 사람인지 궁금한 사람 (직장 동료, 채용 담당자 등)</p>
+        </div>
+        <div class="card">
+          <h3>보여주고 싶은 것</h3>
+          <p>앞으로 만들 바이브 코딩 결과물과 기획 역량</p>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2><span class="num">03</span>디자인 방향</h2>
+      <dl class="rows">
+        <div class="row">
+          <dt>사이트명 / 로고</dt>
+          <dd>
+            <div class="logo">Hoo Lab<span>.</span></div>
+            <p style="color: var(--muted);">심플한 텍스트 로고</p>
+          </dd>
+        </div>
+        <div class="row">
+          <dt>메인 컬러</dt>
+          <dd>
+            <div class="swatches">
+              <div class="swatch"><div class="chip" style="background:#000000"></div><div>블랙<small>#000000 · 배경</small></div></div>
+              <div class="swatch"><div class="chip" style="background:#FFFFFF"></div><div>화이트<small>#FFFFFF · 텍스트</small></div></div>
+              <div class="swatch"><div class="chip" style="background:#439DC5"></div><div>하늘색<small>#439DC5 · 포인트</small></div></div>
+            </div>
+          </dd>
+        </div>
+        <div class="row">
+          <dt>메뉴 구성</dt>
+          <dd>
+            <div class="menu"><span>Home</span><span>About</span><span>Work</span><span>Contact</span></div>
+          </dd>
+        </div>
+        <div class="row">
+          <dt>참고 사이트</dt>
+          <dd><a href="https://dncommerce.co.kr/" target="_blank" rel="noopener">dncommerce.co.kr</a></dd>
+        </div>
+      </dl>
+    </section>
+
+    <section>
+      <h2><span class="num">04</span>핵심 기능</h2>
+
+      <div class="group-title">방문자에게 보이는 기능</div>
+      <ul class="list">
+        <li><strong>자기소개</strong><span>이름과 간단한 소개 문구가 보이는 영역</span></li>
+        <li><strong>스킬</strong><span>서비스 기획·운영 스킬과 바이브 코딩 스킬로 나눠 텍스트로 간결하게 소개</span></li>
+        <li><strong>작업물 목록</strong><span>지금까지 해온 작업을 카드 형태로 나열</span></li>
+        <li><strong>작업물 상세</strong><span>카드를 누르면 이미지, 기획 포인트 등 작업 내용을 자세히 보여줌</span></li>
+        <li><strong>연락 방법</strong><span>개인 이메일 주소 노출, 문의 폼으로 요청 사항 남기기 (이름, 연락받을 이메일, 내용)</span></li>
+      </ul>
+
+      <div class="group-title">운영자 전용 기능</div>
+      <ul class="list">
+        <li><strong>작업물 등록·수정</strong><span>제목, 이미지, 설명, 링크를 입력해 작업물을 추가·수정</span></li>
+        <li><strong>작업물 삭제</strong><span>등록한 작업물을 삭제</span></li>
+        <li><strong>문의 확인</strong><span>방문자가 문의 폼으로 남긴 내용을 운영자 전용 화면에서 확인</span></li>
+        <li><strong>로그인</strong><span>사이트 운영자만 등록·수정·삭제와 문의 확인을 할 수 있도록 본인 확인</span></li>
+      </ul>
+    </section>
+
+    <section>
+      <h2><span class="num">05</span>필요한 화면</h2>
+      <div class="grid screens">
+        <div class="card">
+          <h3>메인</h3>
+          <p>자기소개, 스킬, 작업물 목록</p>
+        </div>
+        <div class="card">
+          <h3>작업물 상세</h3>
+          <p>작업물 카드를 클릭하면 열리는 상세 페이지</p>
+        </div>
+        <div class="card">
+          <h3>작업물 등록·수정</h3>
+          <p>제목·이미지·설명·링크를 입력해 작업물을 추가·수정하는 화면</p>
+        </div>
+        <div class="card">
+          <h3>로그인</h3>
+          <p>운영자 본인 확인 화면</p>
+        </div>
+        <div class="card">
+          <h3>연락</h3>
+          <p>이메일 주소를 안내하고, 문의 폼(이름, 연락받을 이메일, 내용)으로 요청 사항을 남기는 화면</p>
+        </div>
+        <div class="card">
+          <h3>문의 확인</h3>
+          <p>방문자가 남긴 문의를 모아 보는 운영자 전용 화면</p>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2><span class="num">06</span>얻고 싶은 것</h2>
+      <div class="goal">바이브 코딩으로, 기획한 화면을 생각한 방향대로 구현해 보는 것</div>
+    </section>
+
+  </div>
+</body>
+</html>
