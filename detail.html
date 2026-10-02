@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hoo Lab 상세 기획서</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css">
+  <style>
+    :root {
+      --bg: #f6f7f9;
+      --surface: #ffffff;
+      --text: #15171a;
+      --muted: #5f6670;
+      --line: #e4e7eb;
+      --point: #439DC5;
+      --point-text: #2a7aa0;
+      --point-soft: #eaf5fa;
+      --admin: #3d4450;
+      --admin-soft: #eef0f3;
+      --warn: #b4531f;
+      --warn-soft: #fdf1ea;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Pretendard', sans-serif;
+      line-height: 1.7;
+      word-break: keep-all;
+    }
+    .wrap {
+      max-width: 920px;
+      margin: 0 auto;
+      padding: 72px 24px 96px;
+    }
+
+    /* 표지 */
+    header { margin-bottom: 40px; }
+    .eyebrow {
+      color: var(--point-text);
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+    }
+    h1 {
+      margin: 8px 0 12px;
+      font-size: 44px;
+      font-weight: 800;
+      line-height: 1.2;
+      letter-spacing: -0.02em;
+    }
+    .summary { margin: 0; color: var(--muted); font-size: 18px; }
+    .summary a { color: var(--point-text); font-weight: 600; text-decoration: none; }
+    .summary a:hover { text-decoration: underline; }
+
+    /* 목차 */
+    .toc {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+      margin-bottom: 56px;
+    }
+    .toc-box {
+      padding: 20px 24px;
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+    }
+    .toc-box h2 { margin: 0 0 8px; font-size: 15px; }
+    .toc-box ol { margin: 0; padding-left: 20px; color: var(--muted); }
+    .toc-box a { color: inherit; text-decoration: none; }
+    .toc-box a:hover { color: var(--text); text-decoration: underline; }
+
+    /* 파트 제목 */
+    .part {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin: 56px 0 20px;
+    }
+    .part h2 { margin: 0; font-size: 26px; font-weight: 800; }
+    .badge {
+      padding: 2px 10px;
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 600;
+    }
+    .badge.user { background: var(--point-soft); color: var(--point-text); }
+    .badge.admin { background: var(--admin-soft); color: var(--admin); }
+
+    /* 화면 카드 */
+    .screen {
+      margin-bottom: 16px;
+      padding: 28px 32px;
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      scroll-margin-top: 24px;
+    }
+    .screen-head {
+      display: flex;
+      align-items: baseline;
+      gap: 10px;
+      margin-bottom: 16px;
+      padding-bottom: 14px;
+      border-bottom: 1px solid var(--line);
+    }
+    .screen-head .num {
+      color: var(--point-text);
+      font-size: 14px;
+      font-weight: 700;
+    }
+    .admin-part .screen-head .num { color: var(--admin); }
+    .screen-head h3 { margin: 0; font-size: 20px; font-weight: 700; }
+    .screen-head p { margin: 0 0 0 auto; color: var(--muted); font-size: 14px; }
+
+    .spec { margin: 0; padding: 0; list-style: none; }
+    .spec li {
+      position: relative;
+      padding: 8px 0 8px 20px;
+    }
+    .spec li::before {
+      content: "";
+      position: absolute;
+      top: 19px;
+      left: 4px;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--point);
+    }
+    .admin-part .spec li::before { background: var(--admin); }
+    .spec .sub {
+      display: block;
+      color: var(--muted);
+      font-size: 15px;
+    }
+    .tag {
+      display: inline-block;
+      margin-right: 6px;
+      padding: 0 8px;
+      border-radius: 6px;
+      background: var(--point-soft);
+      color: var(--point-text);
+      font-size: 13px;
+      font-weight: 600;
+      vertical-align: 1px;
+    }
+    .admin-part .tag { background: var(--admin-soft); color: var(--admin); }
+
+    .note {
+      margin-top: 16px;
+      padding: 14px 18px;
+      border-radius: 10px;
+      background: var(--warn-soft);
+      color: var(--warn);
+      font-size: 15px;
+      font-weight: 600;
+    }
+
+    footer {
+      margin-top: 56px;
+      color: var(--muted);
+      font-size: 14px;
+      text-align: center;
+    }
+
+    @media (max-width: 640px) {
+      .wrap { padding: 48px 16px 64px; }
+      h1 { font-size: 34px; }
+      .toc { grid-template-columns: 1fr; }
+      .screen { padding: 22px 20px; }
+      .screen-head { flex-wrap: wrap; }
+      .screen-head p { margin-left: 0; width: 100%; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+
+    <header>
+      <div class="eyebrow">HOO LAB · SCREEN SPEC</div>
+      <h1>Hoo Lab 상세 기획서</h1>
+      <p class="summary">화면별 동작 정의 · 전체 방향은 <a href="plan.html">기획서</a> 참고</p>
+    </header>
+
+    <nav class="toc">
+      <div class="toc-box">
+        <h2>사용자 화면</h2>
+        <ol>
+          <li><a href="#u1">메인</a></li>
+          <li><a href="#u2">작업물 목록</a></li>
+          <li><a href="#u3">작업물 상세</a></li>
+          <li><a href="#u4">Contact</a></li>
+        </ol>
+      </div>
+      <div class="toc-box">
+        <h2>관리자 화면</h2>
+        <ol>
+          <li><a href="#a1">작업물 관리</a></li>
+          <li><a href="#a2">문의 내역</a></li>
+          <li><a href="#a3">로그인</a></li>
+        </ol>
+      </div>
+    </nav>
+
+    <!-- 사용자 -->
+    <div class="part">
+      <h2>사용자 화면</h2>
+      <span class="badge user">방문자</span>
+    </div>
+
+    <article class="screen" id="u1">
+      <div class="screen-head">
+        <span class="num">U-01</span>
+        <h3>메인</h3>
+        <p>첫인상 · 대표 작업물</p>
+      </div>
+      <ul class="spec">
+        <li><span class="tag">진입</span>메인 접속 시 이미지 표출, 0.5~1초 후 키워드 텍스트 표출</li>
+        <li><span class="tag">스크롤</span>스킬 항목 표출 — 항목별로 하나씩 떠오르는 효과</li>
+        <li><span class="tag">스크롤</span>대표 작업물 목록 표출
+          <span class="sub">작업물 영역으로 이동하면 'Contact' 플로팅 배너 표출 → 클릭 시 Contact 화면으로 이동</span>
+        </li>
+        <li><span class="tag">클릭</span>작업물 클릭 시 작업물 상세 화면으로 이동</li>
+        <li><span class="tag">클릭</span>'더보기' 클릭 시 작업물 목록 화면으로 이동</li>
+      </ul>
+    </article>
+
+    <article class="screen" id="u2">
+      <div class="screen-head">
+        <span class="num">U-02</span>
+        <h3>작업물 목록</h3>
+        <p>전체 작업물 · 키워드 검색</p>
+      </div>
+      <ul class="spec">
+        <li><span class="tag">진입</span>메인의 GNB(Work 메뉴) 또는 '더보기'를 통해 이동</li>
+        <li><span class="tag">검색</span>키워드 목록에서 키워드 선택</li>
+        <li><span class="tag">검색</span>선택한 키워드 개별 삭제, 전체 선택 삭제</li>
+      </ul>
+    </article>
+
+    <article class="screen" id="u3">
+      <div class="screen-head">
+        <span class="num">U-03</span>
+        <h3>작업물 상세</h3>
+        <p>레이어 팝업형 별도 페이지</p>
+      </div>
+      <ul class="spec">
+        <li><span class="tag">구성</span>레이어 팝업 형태로 디자인 (실제로는 별도 페이지)</li>
+        <li><span class="tag">구성</span>제목 → 기획 포인트 → 이미지 순으로 표출</li>
+        <li><span class="tag">호버</span>이미지에 마우스를 올리면 화살표 표출, 클릭 시 해당 작업물 페이지를 새 창으로 열기</li>
+        <li><span class="tag">진입</span>접속 1~2초 후 팝업 하단에 간단한 문의 창 표출
+          <span class="sub">이메일, 요구사항 입력</span>
+        </li>
+        <li><span class="tag">닫기</span>우측 상단 'X' 클릭 시 메인에서 이전에 스크롤했던 위치로 복귀</li>
+      </ul>
+    </article>
+
+    <article class="screen" id="u4">
+      <div class="screen-head">
+        <span class="num">U-04</span>
+        <h3>Contact</h3>
+        <p>문의 폼</p>
+      </div>
+      <ul class="spec">
+        <li><span class="tag">구성</span>간단한 연락 유도 문구 표출</li>
+        <li><span class="tag">입력</span>이메일 입력</li>
+        <li><span class="tag">입력</span>같이 하고 싶은 프로젝트 내용 입력 (링크 입력 가능)</li>
+        <li><span class="tag">입력</span>개인정보 활용 동의 체크</li>
+      </ul>
+      <div class="note">보안: SQL 인젝션 등 입력값을 이용한 공격 방지 필요</div>
+    </article>
+
+    <!-- 관리자 -->
+    <div class="admin-part">
+      <div class="part">
+        <h2>관리자 화면</h2>
+        <span class="badge admin">운영자 전용</span>
+      </div>
+
+      <article class="screen" id="a1">
+        <div class="screen-head">
+          <span class="num">A-01</span>
+          <h3>작업물 관리</h3>
+          <p>등록 · 수정 · 삭제</p>
+        </div>
+        <ul class="spec">
+          <li><span class="tag">등록</span>제목, 이미지, 설명, 링크를 입력해 작업물 추가, 메인에 보일 대표 작업물 여부 지정</li>
+          <li><span class="tag">상세</span>관리자로 작업물 상세에 접속하면 수정·삭제 버튼 표출</li>
+          <li><span class="tag">수정</span>수정 클릭 시 수정 화면으로 이동, 저장 시 수정 사항 반영</li>
+          <li><span class="tag">삭제</span>삭제 클릭 시 확인 알럿 표출, 확인을 누르면 삭제</li>
+        </ul>
+      </article>
+
+      <article class="screen" id="a2">
+        <div class="screen-head">
+          <span class="num">A-02</span>
+          <h3>문의 내역</h3>
+          <p>방문자 문의 확인</p>
+        </div>
+        <ul class="spec">
+          <li><span class="tag">목록</span>방문자 문의 내역 목록 표출</li>
+          <li><span class="tag">상세</span>클릭 시 문의 상세로 이동해 조회, 확인 시 '확인 날짜' 항목 생성</li>
+          <li><span class="tag">보관</span>보관 기간이 지나 DB에서 삭제된 문의는 목록에서도 삭제</li>
+        </ul>
+      </article>
+
+      <article class="screen" id="a3">
+        <div class="screen-head">
+          <span class="num">A-03</span>
+          <h3>로그인</h3>
+          <p>운영자 인증</p>
+        </div>
+        <ul class="spec">
+          <li><span class="tag">인증</span>아이디, 비밀번호를 입력해 검증, 운영자만 관리자 화면에 접속 가능</li>
+        </ul>
+      </article>
+    </div>
+
+    <footer>Hoo Lab · 상세 기획서</footer>
+
+  </div>
+</body>
+</html>
