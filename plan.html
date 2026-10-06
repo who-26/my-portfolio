@@ -52,6 +52,37 @@
       color: var(--muted);
       font-size: 18px;
     }
+    .links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 24px;
+    }
+    .links a {
+      padding: 8px 16px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      color: var(--text);
+      font-size: 15px;
+      font-weight: 600;
+      text-decoration: none;
+    }
+    .links a:hover { border-color: var(--point); color: var(--point); }
+    .links a.primary { background: var(--point); border-color: var(--point); color: #000; }
+    .links a.primary:hover { color: #000; opacity: 0.85; }
+
+    /* 피드백 */
+    .feedback {
+      margin-top: 56px;
+      padding: 28px 32px;
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+    }
+    .feedback h2 { margin: 0 0 8px; font-size: 20px; }
+    .feedback p { margin: 0; color: var(--muted); }
+    .feedback a { color: var(--point); font-weight: 600; text-decoration: none; }
+    .feedback a:hover { text-decoration: underline; }
 
     /* 섹션 */
     section {
@@ -194,6 +225,10 @@
       <div class="eyebrow">PERSONAL WEBSITE PLAN</div>
       <h1>Hoo Lab 기획서</h1>
       <p class="summary">바이브 코딩으로 만든 웹 서비스와 그 제작 과정을 보여주는 개인 홈페이지</p>
+      <div class="links">
+        <a class="primary" href="detail.html">기능정의서 보기 →</a>
+        <a href="mailto:wlgn024488@gmail.com">피드백 보내기 · wlgn024488@gmail.com</a>
+      </div>
     </header>
 
     <section>
@@ -309,6 +344,11 @@
       <h2><span class="num">06</span>얻고 싶은 것</h2>
       <div class="goal">바이브 코딩으로, 기획한 화면을 생각한 방향대로 구현해 보는 것</div>
     </section>
+
+    <aside class="feedback">
+      <h2>피드백 환영합니다</h2>
+      <p>기획서와 <a href="detail.html">기능정의서</a>를 보고 의견이 있으면 <a href="mailto:wlgn024488@gmail.com">wlgn024488@gmail.com</a>으로 보내주세요.</p>
+    </aside>
 
   </div>
 </body>
