@@ -5,147 +5,27 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>한지후 — Portfolio</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
-<style>
-/* design-style.md 기준: 다크 배경 + 파랑 포인트 1색, 12px 모서리, 10단위 간격 */
-:root{
-  --bg:#0b0c10; --bg2:#14161c; --card:#1a1c23;
-  --ink:#f2f1ee; --ink-soft:#a3a4a8;
-  --point:#2d5be3; --on-point:#ffffff;
-  --content:1440px; --gap:20px;
-  --sp1:10px; --sp2:20px; --sp3:30px; --sp4:40px; --sp5:60px;
-  --radius:12px;
-  --shadow:0 10px 30px rgba(0,0,0,.35);
-  /* 본문 16px에서 1.25배씩 */
-  --fs-sm:12.8px; --fs-base:16px; --fs-1:20px; --fs-2:25px; --fs-3:31.25px; --fs-4:39px; --fs-5:48.8px;
-}
-*{box-sizing:border-box;margin:0;padding:0}
-/* 풀페이지 스크롤: 각 섹션의 시작(또는 끝)에 스냅 */
-html{scroll-behavior:smooth;scroll-snap-type:y mandatory}
-.hero,.role,.sec{scroll-snap-align:start}
-footer.site{scroll-snap-align:end}
-body{font-family:'Pretendard',-apple-system,'Malgun Gothic',sans-serif;font-size:var(--fs-base);font-weight:400;line-height:1.6;color:var(--ink);background:var(--bg);-webkit-font-smoothing:antialiased;word-break:keep-all;overflow-wrap:break-word}
-img{max-width:100%;display:block}
-a{color:inherit;text-decoration:none}
-h1,h2,h3{font-weight:800;line-height:1.3}
-.shell{max-width:var(--content);margin:0 auto;padding:0 var(--sp4)}
-
-.btn{display:inline-flex;align-items:center;gap:var(--sp1);font:inherit;font-weight:800;padding:14px var(--sp3);border-radius:var(--radius);border:0;cursor:pointer;background:var(--point);color:var(--on-point)}
-.btn:hover{filter:brightness(1.1)}
-
-/* ---------- 헤더: 히어로 위에 겹침 ---------- */
-header.site{position:absolute;inset:0 0 auto;z-index:10}
-header.site .shell{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;height:80px}
-.logo{font-size:var(--fs-1);font-weight:800;justify-self:start}
-nav.main{display:flex;gap:var(--sp3)}
-nav.main a{color:var(--ink-soft);transition:color .2s}
-nav.main a:hover{color:var(--ink)}
-
-/* ---------- 히어로 ---------- */
-.hero{position:relative;min-height:100vh;min-height:100svh;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:var(--sp4);padding:120px 0 var(--sp5);text-align:center;overflow:hidden}
-.hero h1{font-size:clamp(31px,4vw,var(--fs-5))}
-.hero .sub{font-size:var(--fs-1);color:var(--ink-soft)}
-
-.slider{width:100%}
-.track{position:relative;height:320px}
-.slide{
-  --w:min(720px,78vw);
-  position:absolute;top:50%;left:50%;width:var(--w);height:280px;
-  border-radius:var(--radius);overflow:hidden;background:var(--card);box-shadow:var(--shadow);
-  text-align:left;
-  transform:translate(calc(-50% + var(--off) * (var(--w) + var(--gap))),-50%) scale(.9);
-  transition:transform .6s ease,opacity .6s ease;
-  opacity:.45;
-}
-.slide.on{transform:translate(-50%,-50%) scale(1);height:320px;opacity:1}
-.slide.far{opacity:0;transition:opacity .3s ease;pointer-events:none}
-.slide img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.35}
-.slide .txt{position:relative;padding:var(--sp4)}
-.slide h2{font-size:var(--fs-3);margin-bottom:var(--sp1)}
-.slide p{color:var(--ink-soft)}
-
-.ctrl{display:flex;flex-direction:column;align-items:center;gap:var(--sp1);margin-top:var(--sp2)}
-.dots{display:flex;gap:var(--sp1)}
-.dots button{width:10px;height:10px;border-radius:50%;border:1px solid var(--ink-soft);background:transparent;cursor:pointer;padding:0}
-.dots button.on{background:var(--point);border-color:var(--point)}
-.play{background:none;border:0;color:var(--ink-soft);cursor:pointer;font-size:var(--fs-sm);padding:4px}
-.play:hover{color:var(--ink)}
-
-/* ---------- 소개 블록 (지그재그 50:50) ---------- */
-.role{display:grid;grid-template-columns:1fr 1fr;height:100vh;height:100svh}
-.role .copy{display:flex;flex-direction:column;justify-content:space-between;gap:var(--sp5);padding:calc(var(--sp5) * 2) var(--sp5)}
-.role .pic{background:var(--bg2);overflow:hidden}
-.role .pic img{width:100%;height:100%;object-fit:cover}
-.role.flip .copy{order:2}
-.label{font-size:var(--fs-sm);letter-spacing:.12em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:var(--sp1)}
-.role h2{font-size:var(--fs-3)}
-.role .desc{color:var(--ink-soft);margin-bottom:var(--sp2)}
-.tags{display:flex;flex-wrap:wrap;gap:var(--sp1);list-style:none}
-.tags li{font-size:var(--fs-sm);padding:4px 14px;border-radius:999px;background:var(--bg2)}
-
-/* ---------- 섹션 공통 ---------- */
-.sec{padding:var(--sp5) 0 calc(var(--sp5) * 2)}
-.sec h2{font-size:var(--fs-3);margin-bottom:var(--sp4)}
-
-/* ---------- 주요 프로젝트 (12컬럼 중 4칸씩) ---------- */
-.grid{display:grid;grid-template-columns:repeat(12,1fr);gap:var(--gap)}
-.proj{grid-column:span 4;background:var(--card);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);transition:transform .25s ease}
-.proj:hover{transform:translateY(-4px)}
-.proj img{aspect-ratio:16/10;width:100%;object-fit:cover}
-.proj .body{padding:var(--sp3)}
-.proj .year{font-size:var(--fs-sm);color:var(--ink-soft)}
-.proj h3{font-size:var(--fs-1);margin:4px 0 var(--sp1)}
-.proj p{color:var(--ink-soft);margin-bottom:var(--sp2)}
-.proj .tags li{background:var(--bg2)}
-
-/* ---------- 문의 ---------- */
-.contact{background:var(--bg2);text-align:center}
-.contact .shell{padding-top:var(--sp5);padding-bottom:var(--sp5)}
-.contact h2{font-size:var(--fs-4);margin-bottom:var(--sp2)}
-.contact p{color:var(--ink-soft);margin-bottom:var(--sp4)}
-
-footer.site{padding:var(--sp3) 0;font-size:var(--fs-sm);color:var(--ink-soft)}
-footer.site .shell{display:flex;justify-content:space-between;gap:var(--sp2)}
-footer.site a:hover{color:var(--ink)}
-
-/* ---------- 반응형 ---------- */
-@media (max-width:900px){
-  .shell{padding:0 var(--sp2)}
-  .role{grid-template-columns:1fr;grid-template-rows:auto 1fr;height:auto;min-height:100svh}
-  .role .copy,.role.flip .copy{order:1;min-height:0;padding:var(--sp4) var(--sp2)}
-  .role .pic{order:2;min-height:0}
-  .proj{grid-column:span 6}
-}
-@media (max-width:600px){
-  header.site .shell{grid-template-columns:1fr auto}
-  nav.main{gap:var(--sp2)}
-  .hero .sub{font-size:var(--fs-base)}
-  .hero .sub br{display:none}
-  .track{height:280px}
-  .slide{height:240px}
-  .slide.on{height:280px}
-  .slide .txt{padding:var(--sp3)}
-  .slide h2{font-size:var(--fs-2)}
-  .proj{grid-column:span 12}
-}
-@media (prefers-reduced-motion:reduce){
-  *{transition:none!important;scroll-behavior:auto!important}
-}
-</style>
+<link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 
 <header class="site">
   <div class="shell">
-    <a href="#" class="logo">한지후</a>
-    <nav class="main">
-      <a href="#project">포트폴리오</a>
-      <a href="#contact">Contact</a>
+    <h1 class="logo"><a href="#"><img src="img/logo.png" alt="HOO LAB"></a></h1>
+    <nav class="menu">
+      <h2 class="blind">주 메뉴 영역</h2>
+      <ul>
+        <li><a href="#project">포트폴리오</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
     </nav>
   </div>
 </header>
 
+<main>
+
 <section class="hero">
-  <h1>아이디어의 시작부터 개발까지<br>하나의 흐름으로 완성합니다.</h1>
+  <h2>아이디어의 시작부터 개발까지<br>하나의 흐름으로 완성합니다.</h2>
 
   <div class="slider" aria-roledescription="carousel" aria-label="대표 작업물">
     <div class="track">
@@ -173,12 +53,13 @@ footer.site a:hover{color:var(--ink)}
   </div>
 
   <p class="sub">복잡한 절차는 줄이고 실행은 더 빠르게, <br>상상했던 서비스를 지체 없이 현실로 구현합니다.</p>
+  <a class="btn" href="#project">포트폴리오 보기 →</a>
 </section>
 
-<section class="role" id="about">
+<section class="role light" id="about">
   <div class="copy">
     <div>
-      <p class="label">Planner</p>
+      <span class="label">Planner</span>
       <h2>무엇을 만들지 설계합니다</h2>
     </div>
     <div>
@@ -189,10 +70,10 @@ footer.site a:hover{color:var(--ink)}
   <div class="pic"><img src="img/profile.jpg" alt="한지후 프로필 사진"></div>
 </section>
 
-<section class="role flip">
+<section class="role flip light">
   <div class="copy">
     <div>
-      <p class="label">Vibe Coder</p>
+      <span class="label">Vibe Coder</span>
       <h2>아이디어를 실현합니다.</h2>
     </div>
     <div>
@@ -246,6 +127,8 @@ footer.site a:hover{color:var(--ink)}
   </div>
 </section>
 
+</main>
+
 <footer class="site">
   <div class="shell">
     <span>한지후 · Web Portfolio © 2026</span>
@@ -253,48 +136,6 @@ footer.site a:hover{color:var(--ink)}
   </div>
 </footer>
 
-<script>
-// 가운데 카드 + 양옆 미리보기 캐러셀
-const slides = [...document.querySelectorAll('.slide')];
-const dotsBox = document.querySelector('.dots');
-const playBtn = document.querySelector('.play');
-const n = slides.length;
-let cur = 0, timer = null;
-
-const dots = slides.map((_, i) => {
-  const b = document.createElement('button');
-  b.type = 'button';
-  b.setAttribute('aria-label', `${i + 1}번 슬라이드`);
-  b.addEventListener('click', () => { go(i); restart(); });
-  dotsBox.appendChild(b);
-  return b;
-});
-
-function go(i){
-  cur = (i + n) % n;
-  slides.forEach((s, k) => {
-    let off = ((k - cur) % n + n) % n;   // 0..n-1
-    if (off > n / 2) off -= n;           // 왼쪽은 음수
-    s.style.setProperty('--off', off);
-    s.classList.toggle('on', off === 0);
-    s.classList.toggle('far', Math.abs(off) > 1);
-    s.tabIndex = off === 0 ? 0 : -1;
-  });
-  dots.forEach((d, k) => d.classList.toggle('on', k === cur));
-}
-
-function start(){ timer = setInterval(() => go(cur + 1), 4000); playBtn.textContent = '❚❚'; playBtn.setAttribute('aria-label', '자동 재생 멈춤'); }
-function stop(){ clearInterval(timer); timer = null; playBtn.textContent = '▶'; playBtn.setAttribute('aria-label', '자동 재생 시작'); }
-function restart(){ if (timer){ stop(); start(); } }
-
-// 양옆 카드를 누르면 그 카드로 이동
-slides.forEach((s, k) => s.addEventListener('click', e => {
-  if (!s.classList.contains('on')){ e.preventDefault(); go(k); restart(); }
-}));
-playBtn.addEventListener('click', () => timer ? stop() : start());
-
-go(0);
-if (matchMedia('(prefers-reduced-motion: reduce)').matches) stop(); else start();
-</script>
+<script src="js/script.js"></script>
 </body>
 </html>
